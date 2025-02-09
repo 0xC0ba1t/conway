@@ -1,10 +1,14 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { COLS, createEmptyGrid, ROWS } from "./utils/utils"
 import { twMerge } from "tailwind-merge";
 
 function App() {
 
   const [grid, setGrid] = useState<number[][]>(createEmptyGrid());
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const playingRef = useRef(isPlaying);
+  playingRef.current = isPlaying;
 
   return (
     <div className='h-screen w-screen flex justify-center p-4 bg-blue-500 flex-col gap-4'>
@@ -20,7 +24,8 @@ function App() {
           rows.map((col, originalColIndex) => (
             <button 
               key={'${originalRowIndex}-${originalColIndex}'}
-              className={twMerge("border border-[#9050e9]",
+              className={twMerge(
+                "border border-[#9050e9]",
                 grid[originalRowIndex][originalColIndex] 
                   ? "bg-[#ad7bee]"
                   : "bg-[#240643]"
